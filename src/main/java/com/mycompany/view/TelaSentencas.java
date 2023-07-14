@@ -75,24 +75,12 @@ public class TelaSentencas extends JFrame {
         return botaoListar;
     }
 
-    public JLabel getLabelSentenca() {
-        return labelSentenca;
-    }
-
     public JTextArea getTextAreaSentencas() {
         return textAreaSentencas;
     }
 
-    public JScrollPane getScrollPaneSentencas() {
-        return scrollPaneSentencas;
-    }
-
-    public JLabel getLabelListagemDeSentencas() {
-        return labelListagemDeSentencas;
-    }
-
-    public JLabel getLabelBuscaExpressao() {
-        return labelBuscaExpressao;
+    public JTextArea getTextAreaResultado() {
+        return textAreaResultado;
     }
 
     public JTextField getTextFieldBusca() {

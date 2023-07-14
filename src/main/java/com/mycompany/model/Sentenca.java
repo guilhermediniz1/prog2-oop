@@ -3,10 +3,12 @@ package com.mycompany.model;
 import java.util.ArrayList;
 
 public class Sentenca {
+    private int posicao;
     private String texto;
     private static int TAMANHO_SENTENCA = 80;
 
-    public Sentenca(String texto) {
+    public Sentenca(int posicao, String texto) {
+        this.posicao = posicao;
         this.setTexto(texto);
     }
 
@@ -20,6 +22,6 @@ public class Sentenca {
 
     @Override
     public String toString() {
-        return texto;
+        return String.format("%d - %s", this.posicao, this.texto);
     }
 }

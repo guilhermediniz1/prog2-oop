@@ -11,18 +11,47 @@ import java.util.ArrayList;
 public class ControladorSentencas {
     private ArrayList<Sentenca> sentencas = new ArrayList<Sentenca>();
     public ControladorSentencas(ArrayList<Sentenca> sentencas) {
+        this.sentencas = sentencas;
         TelaSentencas tela = new TelaSentencas();
         tela.setVisible(true);
 
         JButton botaoSalvar = tela.getBotaoSalvar();
         JButton botaoBuscar = tela.getBotaoBuscar();
         JButton botaoListar = tela.getBotaoListar();
+        JTextArea textAreaResultado = tela.getTextAreaResultado();
 
         botaoSalvar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String text = tela.getTextAreaSentencas().getText();
-                salvarSentenca(new Sentenca(text));
+                salvarSentenca(new Sentenca(sentencas.size() + 1 , text));
+                tela.getTextAreaSentencas().setText("");
+            }
+        });
+
+        botaoBuscar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String textoBuscado = tela.getTextFieldBusca().getText();
+
+                if(textoBuscado.length() == 0) {
+                    JOptionPane.showMessageDialog(tela, "O campo de busca não pode estar vazio!\nFavor informar uma expressão.");
+                    return;
+                }
+
+                ArrayList<Sentenca> resultado = buscarPorTexto(textoBuscado);
+
+                if(resultado.isEmpty()) {
+                    JOptionPane.showMessageDialog(tela, "As sentenças registradas não contém a seguinte expressão: '" + textoBuscado + "'");
+                    return;
+                }
+
+                String temp = "";
+
+                for (Sentenca sentenca: resultado) {
+                    temp += String.format("%s\n", sentenca);
+                }
+                textAreaResultado.setText(temp);
             }
         });
 
@@ -44,5 +73,17 @@ public class ControladorSentencas {
             todasSentencas += (sentenca + "\n");
         }
         return todasSentencas;
+    }
+
+    public ArrayList<Sentenca> buscarPorTexto(String textoBuscado) {
+        ArrayList<Sentenca> sentencasEncontradas = new ArrayList<Sentenca>();
+
+        for (Sentenca sentenca : sentencas) {
+            if(sentenca.getTexto().contains(textoBuscado)) {
+                sentencasEncontradas.add(sentenca);
+            }
+        }
+
+        return sentencasEncontradas;
     }
 }
