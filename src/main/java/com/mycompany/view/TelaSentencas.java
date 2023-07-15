@@ -20,7 +20,6 @@ public class TelaSentencas extends JFrame {
 
 
     public TelaSentencas() {
-
         inicializar();
     }
 

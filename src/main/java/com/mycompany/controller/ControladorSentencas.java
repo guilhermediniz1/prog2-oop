@@ -18,14 +18,18 @@ public class ControladorSentencas {
         JButton botaoSalvar = tela.getBotaoSalvar();
         JButton botaoBuscar = tela.getBotaoBuscar();
         JButton botaoListar = tela.getBotaoListar();
+        JTextArea textAreaSentencas = tela.getTextAreaSentencas();
         JTextArea textAreaResultado = tela.getTextAreaResultado();
 
         botaoSalvar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String text = tela.getTextAreaSentencas().getText();
-                salvarSentenca(new Sentenca(sentencas.size() + 1 , text));
-                tela.getTextAreaSentencas().setText("");
+                String text = textAreaSentencas.getText().trim();
+
+                if(text.length() > 0) {
+                    salvarSentenca(new Sentenca(sentencas.size() + 1 , text));
+                    JOptionPane.showMessageDialog(tela, "Sentença adicionada com sucesso!");
+                }
             }
         });
 
@@ -58,7 +62,13 @@ public class ControladorSentencas {
         botaoListar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                tela.getTextPaneResultado().setText(getSentencas());
+
+                if(getSentencas().length() == 0) {
+                    JOptionPane.showMessageDialog(tela, "Não existem sentenças registradas!");
+                    return;
+                }
+
+                textAreaResultado.setText(getSentencas());
             }
         });
     }
